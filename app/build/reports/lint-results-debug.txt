@@ -1,0 +1,365 @@
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:13: Warning: Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details. [OldTargetApi]
+        targetSdk = 33
+        ~~~~~~~~~~~~~~
+
+   Explanation for issues of type "OldTargetApi":
+   When your application or sdk runs on a version of Android that is more
+   recent than your targetSdkVersion specifies that it has been tested with,
+   various compatibility modes kick in. This ensures that your application
+   continues to work, but it may look out of place. For example, if the
+   targetSdkVersion is less than 14, your app may get an option button in the
+   UI.
+
+   To fix this issue, set the targetSdkVersion to the highest available value.
+   Then test your app to make sure everything works correctly. You may want to
+   consult the compatibility notes to see what changes apply to each version
+   you are adding support for:
+   https://developer.android.com/reference/android/os/Build.VERSION_CODES.html
+   as well as follow this guide:
+   https://developer.android.com/distribute/best-practices/develop/target-sdk.
+   html
+
+   https://developer.android.com/distribute/best-practices/develop/target-sdk.html
+
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\java\com\example\objectid\SplashActivity.kt:13: Warning: The application should not provide its own launch screen [CustomSplashScreen]
+class SplashActivity : AppCompatActivity() {
+      ~~~~~~~~~~~~~~
+
+   Explanation for issues of type "CustomSplashScreen":
+   Starting in Android 12 (API 31+), the application's Launch Screen is
+   provided by the system and the application should not create its own,
+   otherwise the user will see two splashscreens. Please check the
+   SplashScreen class to check how the Splash Screen can be controlled and
+   customized.
+
+   https://developer.android.com/guide/topics/ui/splash-screen
+
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\gradle\libs.versions.toml:2: Warning: A newer version of com.android.application than 8.8.0 is available: 8.10.1. (There is also a newer version of 8.8.𝑥 available, if upgrading to 8.10.1 is difficult: 8.8.2) [AndroidGradlePluginVersion]
+agp = "8.8.0"
+      ~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\gradle\libs.versions.toml:2: Warning: A newer version of com.android.application than 8.8.0 is available: 8.10.1. (There is also a newer version of 8.8.𝑥 available, if upgrading to 8.10.1 is difficult: 8.8.2) [AndroidGradlePluginVersion]
+agp = "8.8.0"
+      ~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\gradle\libs.versions.toml:2: Warning: A newer version of com.android.application than 8.8.0 is available: 8.10.1. (There is also a newer version of 8.8.𝑥 available, if upgrading to 8.10.1 is difficult: 8.8.2) [AndroidGradlePluginVersion]
+agp = "8.8.0"
+      ~~~~~~~
+
+   Explanation for issues of type "AndroidGradlePluginVersion":
+   This detector looks for usage of the Android Gradle Plugin where the
+   version you are using is not the current stable release. Using older
+   versions is fine, and there are cases where you deliberately want to stick
+   with an older version. However, you may simply not be aware that a more
+   recent version is available, and that is what this lint check helps find.
+
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:8: Warning: A newer version of compileSdkVersion than 33 is available: 34 [GradleDependency]
+    compileSdk = 33
+    ~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:54: Warning: A newer version of androidx.core:core-ktx than 1.10.1 is available: 1.16.0 [GradleDependency]
+    implementation("androidx.core:core-ktx:1.10.1") // Downgraded from 1.12.0
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:55: Warning: A newer version of androidx.appcompat:appcompat than 1.6.1 is available: 1.7.1 [GradleDependency]
+    implementation("androidx.appcompat:appcompat:1.6.1")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:56: Warning: A newer version of com.google.android.material:material than 1.9.0 is available: 1.12.0 [GradleDependency]
+    implementation("com.google.android.material:material:1.9.0") // Downgraded from 1.10.0
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:57: Warning: A newer version of androidx.constraintlayout:constraintlayout than 2.1.4 is available: 2.2.1 [GradleDependency]
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:60: Warning: A newer version of androidx.lifecycle:lifecycle-viewmodel-ktx than 2.6.1 is available: 2.9.1 [GradleDependency]
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1") // Downgraded from 2.6.2
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:61: Warning: A newer version of androidx.lifecycle:lifecycle-livedata-ktx than 2.6.1 is available: 2.9.1 [GradleDependency]
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1") // Downgraded from 2.6.2
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:62: Warning: A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.6.1 is available: 2.9.1 [GradleDependency]
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1") // Downgraded from 2.6.2
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:67: Warning: A newer version of com.google.code.gson:gson than 2.10.1 is available: 2.11.0 [GradleDependency]
+    implementation("com.google.code.gson:gson:2.10.1")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:71: Warning: A newer version of org.tensorflow:tensorflow-lite-support than 0.4.0 is available: 0.4.4 [GradleDependency]
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:72: Warning: A newer version of org.tensorflow:tensorflow-lite than 2.12.0 is available: 2.14.0 [GradleDependency]
+    implementation("org.tensorflow:tensorflow-lite:2.12.0") // Explicit core library
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:77: Warning: A newer version of androidx.test.ext:junit than 1.1.5 is available: 1.2.1 [GradleDependency]
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:78: Warning: A newer version of androidx.test.espresso:espresso-core than 3.5.1 is available: 3.6.1 [GradleDependency]
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\gradle\libs.versions.toml:8: Warning: A newer version of androidx.appcompat:appcompat than 1.7.0 is available: 1.7.1 [GradleDependency]
+appcompat = "1.7.0"
+            ~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\gradle\libs.versions.toml:8: Warning: A newer version of androidx.appcompat:appcompat than 1.7.0 is available: 1.7.1 [GradleDependency]
+appcompat = "1.7.0"
+            ~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\gradle\libs.versions.toml:8: Warning: A newer version of androidx.appcompat:appcompat than 1.7.0 is available: 1.7.1 [GradleDependency]
+appcompat = "1.7.0"
+            ~~~~~~~
+
+   Explanation for issues of type "GradleDependency":
+   This detector looks for usages of libraries where the version you are using
+   is not the current stable release. Using older versions is fine, and there
+   are cases where you deliberately want to stick with an older version.
+   However, you may simply not be aware that a more recent version is
+   available, and that is what this lint check helps find.
+
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_main.xml:7: Warning: Possible overdraw: Root element paints background @android:color/white with a theme that also paints a background (inferred theme is @style/Theme.ObjectID) [Overdraw]
+    android:background="@android:color/white"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_splash.xml:7: Warning: Possible overdraw: Root element paints background #FFFFFF with a theme that also paints a background (inferred theme is @style/Theme_ObjectID_NoActionBar) [Overdraw]
+    android:background="#FFFFFF">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "Overdraw":
+   If you set a background drawable on a root view, then you should use a
+   custom theme where the theme background is null. Otherwise, the theme
+   background will be painted first, only to have your custom background
+   completely cover it; this is called "overdraw".
+
+   NOTE: This detector relies on figuring out which layouts are associated
+   with which activities based on scanning the Java code, and it's currently
+   doing that using an inexact pattern matching algorithm. Therefore, it can
+   incorrectly conclude which activity the layout is associated with and then
+   wrongly complain that a background-theme is hidden.
+
+   If you want your custom background on multiple pages, then you should
+   consider making a custom theme with your custom background and just using
+   that theme instead of a root element background.
+
+   Of course it's possible that your custom drawable is translucent and you
+   want it to be mixed with the background. However, you will get better
+   performance if you pre-mix the background with your drawable and use that
+   resulting image or color as a custom theme background instead.
+
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\values\colors.xml:8: Warning: The resource R.color.white appears to be unused [UnusedResources]
+    <color name="white">#FFFFFF</color>
+           ~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\values\colors.xml:9: Warning: The resource R.color.black appears to be unused [UnusedResources]
+    <color name="black">#000000</color>
+           ~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\values\colors.xml:10: Warning: The resource R.color.result_background appears to be unused [UnusedResources]
+    <color name="result_background">#F5F5F5</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\values\colors.xml:11: Warning: The resource R.color.annotation_color appears to be unused [UnusedResources]
+    <color name="annotation_color">#F44336</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\values\colors.xml:12: Warning: The resource R.color.instruction_background appears to be unused [UnusedResources]
+    <color name="instruction_background">#80000000</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\values\strings.xml:11: Warning: The resource R.string.error_message appears to be unused [UnusedResources]
+    <string name="error_message">Error: %1$s</string>
+            ~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\values\strings.xml:13: Warning: The resource R.string.low_confidence_warning appears to be unused [UnusedResources]
+    <string name="low_confidence_warning">Low confidence. Try again with a clearer image.</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\values\strings.xml:14: Warning: The resource R.string.recognition_failed appears to be unused [UnusedResources]
+    <string name="recognition_failed">Recognition failed. Please try again.</string>
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\values\styles.xml:17: Warning: The resource R.style.AppButton appears to be unused [UnusedResources]
+    <style name="AppButton" parent="Widget.MaterialComponents.Button">
+           ~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UnusedResources":
+   Unused resources make applications larger and slow down builds.
+
+
+   The unused resource check can ignore tests. If you want to include
+   resources that are only referenced from tests, consider packaging them in a
+   test source set instead.
+
+   You can include test sources in the unused resource check by setting the
+   system property lint.unused-resources.include-tests =true, and to exclude
+   them (usually for performance reasons), use
+   lint.unused-resources.exclude-tests =true.
+   ,
+
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\mipmap-hdpi\ic_launcher.xml:2: Warning: The application adaptive icon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\mipmap-mdpi\ic_launcher.xml:2: Warning: The application adaptive icon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\mipmap-xhdpi\ic_launcher.xml:2: Warning: The application adaptive icon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\mipmap-xxhdpi\ic_launcher.xml:2: Warning: The application adaptive icon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\mipmap-xxxhdpi\ic_launcher.xml:2: Warning: The application adaptive icon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\mipmap-hdpi\ic_launcher_round.xml:2: Warning: The application adaptive roundIcon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\mipmap-mdpi\ic_launcher_round.xml:2: Warning: The application adaptive roundIcon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\mipmap-xhdpi\ic_launcher_round.xml:2: Warning: The application adaptive roundIcon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\mipmap-xxhdpi\ic_launcher_round.xml:2: Warning: The application adaptive roundIcon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\mipmap-xxxhdpi\ic_launcher_round.xml:2: Warning: The application adaptive roundIcon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+
+   Explanation for issues of type "MonochromeLauncherIcon":
+   If android:roundIcon and android:icon are both in your manifest, you must
+   either remove the reference to android:roundIcon if it is not needed; or,
+   supply the monochrome icon in the drawable defined by the android:roundIcon
+   and android:icon attribute.
+
+   For example, if android:roundIcon and android:icon are both in the
+   manifest, a launcher might choose to use android:roundIcon over
+   android:icon to display the adaptive app icon. Therefore, your themed
+   application iconwill not show if your monochrome attribute is not also
+   specified in android:roundIcon.
+
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_main.xml:167: Warning: Buttons in button bars should be borderless; use style="?android:attr/buttonBarButtonStyle" (and ?android:attr/buttonBarStyle on the parent) [ButtonStyle]
+            <Button
+             ~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_main.xml:175: Warning: Buttons in button bars should be borderless; use style="?android:attr/buttonBarButtonStyle" (and ?android:attr/buttonBarStyle on the parent) [ButtonStyle]
+            <Button
+             ~~~~~~
+
+   Explanation for issues of type "ButtonStyle":
+   Button bars typically use a borderless style for the buttons. Set the
+   style="?android:attr/buttonBarButtonStyle" attribute on each of the
+   buttons, and set style="?android:attr/buttonBarStyle" on the parent layout
+
+   https://d.android.com/r/studio-ui/designer/material/dialogs
+
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:54: Warning: Use version catalog instead (androidx.core:core-ktx is already available as androidx-core-ktx, but using version 1.16.0 instead) [UseTomlInstead]
+    implementation("androidx.core:core-ktx:1.10.1") // Downgraded from 1.12.0
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:55: Warning: Use version catalog instead (androidx.appcompat:appcompat is already available as androidx-appcompat, but using version 1.7.0 instead) [UseTomlInstead]
+    implementation("androidx.appcompat:appcompat:1.6.1")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:56: Warning: Use version catalog instead (com.google.android.material:material is already available as material, but using version 1.12.0 instead) [UseTomlInstead]
+    implementation("com.google.android.material:material:1.9.0") // Downgraded from 1.10.0
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:57: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:60: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1") // Downgraded from 2.6.2
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:61: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1") // Downgraded from 2.6.2
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:62: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1") // Downgraded from 2.6.2
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:65: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:66: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:67: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("com.google.code.gson:gson:2.10.1")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:70: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:71: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:72: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("org.tensorflow:tensorflow-lite:2.12.0") // Explicit core library
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:73: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.12.0") // GPU support
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:76: Warning: Use the existing version catalog reference (libs.junit) instead [UseTomlInstead]
+    testImplementation("junit:junit:4.13.2")
+                       ~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:77: Warning: Use version catalog instead (androidx.test.ext:junit is already available as androidx-junit, but using version 1.2.1 instead) [UseTomlInstead]
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build.gradle.kts:78: Warning: Use version catalog instead (androidx.test.espresso:espresso-core is already available as androidx-espresso-core, but using version 3.6.1 instead) [UseTomlInstead]
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UseTomlInstead":
+   If your project is using a libs.versions.toml file, you should place all
+   Gradle dependencies in the TOML file. This lint check looks for version
+   declarations outside of the TOML file and suggests moving them (and in the
+   IDE, provides a quickfix to performing the operation automatically).
+
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\java\com\example\objectid\AnnotationView.kt:44: Warning: Custom view AnnotationView overrides onTouchEvent but not performClick [ClickableViewAccessibility]
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+                 ~~~~~~~~~~~~
+
+   Explanation for issues of type "ClickableViewAccessibility":
+   If a View that overrides onTouchEvent or uses an OnTouchListener does not
+   also implement performClick and call it when clicks are detected, the View
+   may not handle accessibility actions properly. Logic handling the click
+   actions should ideally be placed in View#performClick as some accessibility
+   services invoke performClick when a click action should occur.
+
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\java\com\example\objectid\MainActivity.kt:305: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+            binding.tvConfidence.text = "Top confidence: ${(confidence * 100).toInt()}%"
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\java\com\example\objectid\MainActivity.kt:305: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            binding.tvConfidence.text = "Top confidence: ${(confidence * 100).toInt()}%"
+                                         ~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "SetTextI18n":
+   When calling TextView#setText
+   * Never call Number#toString() to format numbers; it will not handle
+   fraction separators and locale-specific digits properly. Consider using
+   String#format with proper format specifications (%d or %f) instead.
+   * Do not pass a string literal (e.g. "Hello") to display text. Hardcoded
+   text can not be properly translated to other languages. Consider using
+   Android resource strings instead.
+   * Do not build messages by concatenating text chunks. Such messages can not
+   be properly translated.
+
+   https://developer.android.com/guide/topics/resources/localization.html
+
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_main.xml:25: Warning: Hardcoded string "Back", should use @string resource [HardcodedText]
+            android:contentDescription="Back"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_main.xml:32: Warning: Hardcoded string "IMG Recognition", should use @string resource [HardcodedText]
+            android:text="IMG Recognition"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_main.xml:55: Warning: Hardcoded string "Image for object recognition", should use @string resource [HardcodedText]
+            android:contentDescription="Image for object recognition"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_main.xml:100: Warning: Hardcoded string "Recognition Results", should use @string resource [HardcodedText]
+                android:text="Recognition Results"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_main.xml:132: Warning: Hardcoded string "Start New Recognition", should use @string resource [HardcodedText]
+                android:text="Start New Recognition"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_splash.xml:18: Warning: Hardcoded string "App Logo", should use @string resource [HardcodedText]
+        android:contentDescription="App Logo" />
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_splash.xml:25: Warning: Hardcoded string "IMG", should use @string resource [HardcodedText]
+        android:text="IMG"
+        ~~~~~~~~~~~~~~~~~~
+C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res\layout\activity_splash.xml:37: Warning: Hardcoded string "Image Recognition", should use @string resource [HardcodedText]
+        android:text="Image Recognition"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "HardcodedText":
+   Hardcoding text attributes directly in layout files is bad for several
+   reasons:
+
+   * When creating configuration variations (for example for landscape or
+   portrait) you have to repeat the actual text (and keep it up to date when
+   making changes)
+
+   * The application cannot be translated to other languages by just adding
+   new translations for existing string resources.
+
+   There are quickfixes to automatically extract this hardcoded string into a
+   resource lookup.
+
+0 errors, 72 warnings

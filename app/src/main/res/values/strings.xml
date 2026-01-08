@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ObjectID</string>
+    <string name="capture_image">Capture Image</string>
+    <string name="select_from_gallery">Select from Gallery</string>
+    <string name="draw_annotation">Draw Annotation Box</string>
+    <string name="recognize_object">Recognize Object</string>
+    <string name="retry">Retry</string>
+    <string name="recognition_result">Recognition Result: %1$s</string>
+    <string name="confidence_score">Confidence: %1$.2f</string>
+    <string name="error_message">Error: %1$s</string>
+    <string name="annotation_instructions">Draw a box around the object you want to identify</string>
+    <string name="low_confidence_warning">Low confidence. Try again with a clearer image.</string>
+    <string name="recognition_failed">Recognition failed. Please try again.</string>
+</resources>

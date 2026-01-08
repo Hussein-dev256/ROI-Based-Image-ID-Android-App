@@ -1,0 +1,6 @@
+com.example.objectid.test.app-annotation-experimental-1.3.0-0 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\d4024be6bd366d3d60403ba8307ae60d\transformed\annotation-experimental-1.3.0\res
+com.example.objectid.test.app-core-1.5.0-1 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\e360f5cc6a509bb3bf2d77f09cd4d2b4\transformed\core-1.5.0\res
+com.example.objectid.test.app-androidTest-2 C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build\generated\res\resValues\androidTest\debug
+com.example.objectid.test.app-mergeDebugAndroidTestResources-3 C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.example.objectid.test.app-mergeDebugAndroidTestResources-4 C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.example.objectid.test.app-debugAndroidTest-5 C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources

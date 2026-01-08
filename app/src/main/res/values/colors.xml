@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#4285F4</color>
+    <color name="primary_dark">#3367D6</color>
+    <color name="accent">#F4B400</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="result_background">#F5F5F5</color>
+    <color name="annotation_color">#F44336</color>
+    <color name="instruction_background">#80000000</color>
+</resources>

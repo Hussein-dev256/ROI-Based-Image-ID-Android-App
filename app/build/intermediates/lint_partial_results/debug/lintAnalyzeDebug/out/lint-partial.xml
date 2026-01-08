@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.8.0" type="partial_results">
+    <map id="UnsafeIntentLaunch">
+            <map id="unprotected">
+                <entry
+                    name="com.example.objectid.MainActivity"
+                    boolean="true"/>
+                <entry
+                    name="com.example.objectid.SplashActivity"
+                    boolean="true"/>
+            </map>
+    </map>
+    <map id="UnusedResources">
+        <location id="R.color.annotation_color"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/colors.xml"
+            line="11"
+            column="12"
+            startOffset="420"
+            endLine="11"
+            endColumn="35"
+            endOffset="443"/>
+        <location id="R.color.black"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/colors.xml"
+            line="9"
+            column="12"
+            startOffset="328"
+            endLine="9"
+            endColumn="24"
+            endOffset="340"/>
+        <location id="R.color.instruction_background"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/colors.xml"
+            line="12"
+            column="12"
+            startOffset="471"
+            endLine="12"
+            endColumn="41"
+            endOffset="500"/>
+        <location id="R.color.result_background"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/colors.xml"
+            line="10"
+            column="12"
+            startOffset="368"
+            endLine="10"
+            endColumn="36"
+            endOffset="392"/>
+        <location id="R.color.white"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/colors.xml"
+            line="8"
+            column="12"
+            startOffset="288"
+            endLine="8"
+            endColumn="24"
+            endOffset="300"/>
+        <location id="R.string.error_message"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/strings.xml"
+            line="11"
+            column="13"
+            startOffset="535"
+            endLine="11"
+            endColumn="33"
+            endOffset="555"/>
+        <location id="R.string.low_confidence_warning"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/strings.xml"
+            line="13"
+            column="13"
+            startOffset="691"
+            endLine="13"
+            endColumn="42"
+            endOffset="720"/>
+        <location id="R.string.recognition_failed"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/strings.xml"
+            line="14"
+            column="13"
+            startOffset="790"
+            endLine="14"
+            endColumn="38"
+            endOffset="815"/>
+        <location id="R.style.AppButton"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/styles.xml"
+            line="17"
+            column="12"
+            startOffset="730"
+            endLine="17"
+            endColumn="28"
+            endOffset="746"/>
+        <entry
+            name="model"
+            string="anim[fade_in(U)],attr[actionBarSize(R),selectableItemBackgroundBorderless(R)],color[primary(U),accent(U),ic_launcher_background(U),primary_dark(U),text_primary(U),text_secondary(U),white(D),black(D),result_background(D),annotation_color(D),instruction_background(D)],drawable[ic_launcher_foreground(U),logo_img(U)],id[toolbar(U),btnBack(U),imageContainer(D),buttonContainer(U),imageView(U),annotationView(U),annotationInstructions(U),resultContainer(U),tvRecognitionResult(U),tvConfidence(U),btnReset(U),progressBar(U),btnCapture(U),btnGallery(U),btnAnnotate(U),btnRecognize(U),btnRetry(U),ivLogo(U),tvAppName(U)],layout[activity_main(U),activity_splash(U)],mipmap[ic_launcher(U),ic_launcher_round(U)],string[app_name(U),annotation_instructions(U),capture_image(U),select_from_gallery(U),draw_annotation(U),recognize_object(U),retry(U),recognition_result(U),confidence_score(U),error_message(D),low_confidence_warning(D),recognition_failed(D)],style[Theme_ObjectID(U),Theme_ObjectID_NoActionBar(U),Theme_MaterialComponents_DayNight_DarkActionBar(R),AppButton(D),Widget_MaterialComponents_Button(E)];23^3^1^2^13^10^e^28^4^29^2a^2b^2c^2d,24^f^21^22,25^5,26^5,33^35^3^6^4^7^8,34^33,36^37;;;"/>
+    </map>
+
+</incidents>

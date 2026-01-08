@@ -1,0 +1,38 @@
+com.example.objectid.app-lifecycle-livedata-core-ktx-2.6.1-0 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\0bd17417fba669d1b9987497dfb20860\transformed\lifecycle-livedata-core-ktx-2.6.1\res
+com.example.objectid.app-emoji2-views-helper-1.2.0-1 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\0d98017c50c03ad0bcea28d9b38a4516\transformed\emoji2-views-helper-1.2.0\res
+com.example.objectid.app-core-runtime-2.2.0-2 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\162a94f65d1c27ae63e7b3528509cbcc\transformed\core-runtime-2.2.0\res
+com.example.objectid.app-savedstate-1.2.1-3 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\189c9b0443101e670a9a79087394ec55\transformed\savedstate-1.2.1\res
+com.example.objectid.app-fragment-1.3.6-4 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\1c925a9f8b119d636d5abf9da216c535\transformed\fragment-1.3.6\res
+com.example.objectid.app-constraintlayout-2.1.4-5 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\2841e9ad63f907be2427a1f0618b68bf\transformed\constraintlayout-2.1.4\res
+com.example.objectid.app-lifecycle-runtime-2.6.1-6 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\2ad13ba0c0f133dc805d445ea6a6a96c\transformed\lifecycle-runtime-2.6.1\res
+com.example.objectid.app-lifecycle-livedata-core-2.6.1-7 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\3815408e0f3ae86a001a846888fdda47\transformed\lifecycle-livedata-core-2.6.1\res
+com.example.objectid.app-lifecycle-process-2.6.1-8 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\414582dfb7189ff74718633abc8d6375\transformed\lifecycle-process-2.6.1\res
+com.example.objectid.app-emoji2-1.2.0-9 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\41a5a184da44675d91f852e4cb9cf064\transformed\emoji2-1.2.0\res
+com.example.objectid.app-lifecycle-viewmodel-ktx-2.6.1-10 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\53c15d967a2007ed2daf3e18ff068340\transformed\lifecycle-viewmodel-ktx-2.6.1\res
+com.example.objectid.app-core-1.10.1-11 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\56a5250f1a8d4546b564b9c319228be4\transformed\core-1.10.1\res
+com.example.objectid.app-core-ktx-1.10.1-12 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\59b3a5d4724af0e050c261ea58335c34\transformed\core-ktx-1.10.1\res
+com.example.objectid.app-viewpager2-1.0.0-13 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\5cd97b838b303a924f8a46e9c5d6e55d\transformed\viewpager2-1.0.0\res
+com.example.objectid.app-lifecycle-livedata-2.6.1-14 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\5dc0c48200fd0cb91cce678d54ac5be7\transformed\lifecycle-livedata-2.6.1\res
+com.example.objectid.app-transition-1.2.0-15 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\69b489e3ed75866d01f942c2aee77e48\transformed\transition-1.2.0\res
+com.example.objectid.app-activity-1.6.0-16 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\6ab3035ecbd31f56ed18461d5f301bbe\transformed\activity-1.6.0\res
+com.example.objectid.app-drawerlayout-1.1.1-17 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\754d8536da360f325b36ca77dc4fbb26\transformed\drawerlayout-1.1.1\res
+com.example.objectid.app-lifecycle-viewmodel-2.6.1-18 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\8f74d7af7bf6026793570372305e03d0\transformed\lifecycle-viewmodel-2.6.1\res
+com.example.objectid.app-recyclerview-1.1.0-19 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\93d86e8956b43150648f4379cf985ded\transformed\recyclerview-1.1.0\res
+com.example.objectid.app-lifecycle-viewmodel-savedstate-2.6.1-20 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\a328b107f56a4bc7a97a4fe48b3e4401\transformed\lifecycle-viewmodel-savedstate-2.6.1\res
+com.example.objectid.app-lifecycle-runtime-ktx-2.6.1-21 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\a9508a9ee1bd1512f01053b5893d190e\transformed\lifecycle-runtime-ktx-2.6.1\res
+com.example.objectid.app-profileinstaller-1.3.0-22 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\ab3e6c50b6ed6f313fe0ed9fece2d1c6\transformed\profileinstaller-1.3.0\res
+com.example.objectid.app-appcompat-resources-1.6.1-23 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\b1c23dd5185f8ca05de6d34e2f78b7e5\transformed\appcompat-resources-1.6.1\res
+com.example.objectid.app-material-1.9.0-24 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\bc0bc96124541b77aefec9b2f707d59e\transformed\material-1.9.0\res
+com.example.objectid.app-startup-runtime-1.1.1-25 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\c1d07b447dfb184ff238b2639c0ced90\transformed\startup-runtime-1.1.1\res
+com.example.objectid.app-cardview-1.0.0-26 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\c624e68c5874c32a041d48ed547e0e99\transformed\cardview-1.0.0\res
+com.example.objectid.app-lifecycle-livedata-ktx-2.6.1-27 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\d2e8ce2b3fe74e9d45b4b0548eafe10d\transformed\lifecycle-livedata-ktx-2.6.1\res
+com.example.objectid.app-annotation-experimental-1.3.0-28 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\d4024be6bd366d3d60403ba8307ae60d\transformed\annotation-experimental-1.3.0\res
+com.example.objectid.app-appcompat-1.6.1-29 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\f22435a0734b688baaec4c6b9530a03e\transformed\appcompat-1.6.1\res
+com.example.objectid.app-coordinatorlayout-1.1.0-30 C:\Users\HUSSEIN\.gradle\caches\8.10.2\transforms\f8a21368b1c42f41e12228fc74f4a3a6\transformed\coordinatorlayout-1.1.0\res
+com.example.objectid.app-pngs-31 C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build\generated\res\pngs\debug
+com.example.objectid.app-resValues-32 C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build\generated\res\resValues\debug
+com.example.objectid.app-packageDebugResources-33 C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.objectid.app-packageDebugResources-34 C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.objectid.app-debug-35 C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\build\intermediates\merged_res\debug\mergeDebugResources
+com.example.objectid.app-debug-36 C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\debug\res
+com.example.objectid.app-main-37 C:\Users\HUSSEIN\Desktop\RESEARCH PROJECT\IMG\app\src\main\res

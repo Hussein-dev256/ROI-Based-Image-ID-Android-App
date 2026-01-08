@@ -1,0 +1,3 @@
+com.example.objectid.test
+style WhiteBackgroundDialogTheme
+style WhiteBackgroundTheme
