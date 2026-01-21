@@ -1,0 +1,265 @@
+# 📌 Product Brief — ObjectID Portfolio Showcase
+
+## 1. The Problem (Business + Product Perspective)
+
+Right now, **ObjectID exists only as an APK**.
+
+From a **user / recruiter / client** perspective:
+
+* They cannot preview the product instantly
+* They must trust and install an APK (high friction, low trust)
+* They cannot experience ObjectID alongside your other live projects
+* Your strongest work looks *less impressive* than weaker projects that have live demos
+
+From a **portfolio conversion** perspective:
+
+* APK-only projects underperform
+* Visitors bounce instead of engaging
+* You lose credibility despite solid engineering
+
+👉 **The problem is not ObjectID.
+The problem is how it is presented.**
+
+---
+
+## 2. Product Goal (What We Are Fixing)
+
+**Primary Goal**
+
+> Make ObjectID instantly usable from the browser with zero installation.
+
+**Secondary Goals**
+
+* Keep the existing Android app untouched
+* Avoid re-training models
+* Minimize cost and hosting dependencies
+* Make ObjectID look like a *real product*, not a student demo
+
+**Non-Goals**
+
+* We are NOT replacing the Android app
+* We are NOT rebuilding the entire system
+* We are NOT chasing perfect UI before functionality
+
+---
+
+## 3. Solution Overview (What We Will Build)
+
+We will build a **Web-based ObjectID Demo**, with a **future path to PWA**.
+
+### High-Level Flow
+
+```
+Portfolio → Live Demo → Upload Image → Model Inference → Results
+```
+
+### Key Principle
+
+> The web demo is a **presentation layer**, not a rewrite.
+
+---
+
+## 4. Architecture Decision (Why This Approach)
+
+### Chosen Approach: **API-backed Web Demo**
+
+**Why**
+
+* Fastest time to value
+* Reuses existing inference logic
+* Lowest risk
+* Easiest to debug
+* Clean separation of concerns
+
+### Architecture
+
+```
+Frontend (Web)
+   ↓
+Inference API (FastAPI or NestJS)
+   ↓
+TensorFlow Lite Model
+   ↓
+Prediction Response
+```
+
+---
+
+## 5. Developer Execution Plan (Step-by-Step)
+
+### Phase 1 — Stabilize the Core (DO NOT SKIP)
+
+**Objective**
+Ensure your current inference logic is stable and reusable.
+
+**Tasks**
+
+* Extract image preprocessing into a standalone function
+* Extract model loading into a singleton/service
+* Define a single inference function:
+
+```text
+input: image
+output: { label, confidence[] }
+```
+
+**Rules**
+
+* No UI work yet
+* No optimization yet
+* No refactoring unrelated code
+
+**Acceptance Criteria**
+
+* Given the same image, APK and API return the same results
+
+---
+
+### Phase 2 — Build the Inference API
+
+**Objective**
+Expose ObjectID as a service.
+
+**Endpoint**
+
+```
+POST /identify
+Content-Type: multipart/form-data
+```
+
+**Request**
+
+* image file
+* optional flags (top_k, threshold)
+
+**Response**
+
+```json
+{
+  "predictions": [
+    { "label": "Dog", "confidence": 0.92 }
+  ]
+}
+```
+
+**Non-Negotiables**
+
+* Input validation
+* File size limits
+* Timeouts
+* Error handling (no stack traces to client)
+
+---
+
+### Phase 3 — Build the Web Demo UI
+
+**Objective**
+Allow instant interaction.
+
+**UI Scope**
+
+* Image upload
+* Preview
+* “Identify” button
+* Results list
+
+**Out of Scope**
+
+* Auth
+* History
+* Styling perfection
+
+**Rule**
+
+> If it doesn’t help understanding ObjectID, it doesn’t get built.
+
+---
+
+### Phase 4 — Portfolio Integration
+
+**Objective**
+Make ObjectID visible and impressive.
+
+**Project Card Must Include**
+
+* Live Demo
+* Short explanation
+* Tech stack
+* Link to APK
+* Link to GitHub
+
+**CTA Priority**
+
+1. Live Demo
+2. Case Study
+3. APK Download
+
+---
+
+## 6. Risk Management (How We Avoid Breaking Things)
+
+### Rule #1 — APK is Sacred
+
+* No changes to the existing Android code
+* No shared mutable code
+* No forced refactors
+
+---
+
+### Rule #2 — Feature Flags
+
+* Web demo uses its own config
+* Separate model path if needed
+* Environment-based switching
+
+---
+
+### Rule #3 — Validation Parity
+
+Before deployment:
+
+* Test same image on:
+
+  * Android app
+  * API
+* Compare labels and confidence ranges
+
+---
+
+### Rule #4 — Performance Guardrails
+
+* Max image size enforced
+* CPU inference only
+* Timeout hard limit (e.g. 5s)
+
+---
+
+## 7. Quality Checklist (Definition of “Done”)
+
+✅ Web demo loads in < 3 seconds
+✅ Image inference < 5 seconds
+✅ No crashes on invalid input
+✅ APK remains unchanged
+✅ Live link works from portfolio
+✅ Clear explanation visible
+
+---
+
+## 8. Future Enhancements (NOT NOW)
+
+Document only — do not implement yet:
+
+* PWA offline mode
+* Camera capture
+* On-device inference (TF.js)
+* Model switching
+* Dataset expansion
+
+---
+
+## 9. Final Instruction to Developer
+
+> Treat ObjectID like a **product**, not a project.
+> The web demo exists to **sell your competence**, not to be perfect.
+
+Build **small**, **stable**, and **presentable**.

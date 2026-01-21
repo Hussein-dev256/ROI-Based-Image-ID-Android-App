@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ObjectID - Advanced AI-powered object recognition in your browser. Upload an image and get instant, accurate object identification using state-of-the-art machine learning.">
+    <title>ObjectID - AI Object Recognition</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <h1 class="logo-text">ObjectID</h1>
+            </div>
+            <p class="tagline">AI-Powered Object Recognition</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Area -->
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-card">
+                    <div class="upload-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </div>
+                    <h2 class="upload-title">Upload an Image</h2>
+                    <p class="upload-description">Drop your image here or click to browse</p>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                    <button class="btn btn-primary" id="uploadBtn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        Choose Image
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="preview-section hidden" id="previewSection">
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <h3>Preview</h3>
+                        <button class="btn btn-secondary btn-sm" id="changeImageBtn">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            </svg>
+                            Change Image
+                        </button>
+                    </div>
+                    <div class="image-preview-container">
+                        <img id="previewImage" alt="Preview" class="preview-image">
+                    </div>
+                    <button class="btn btn-primary btn-large" id="identifyBtn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        Identify Object
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading Section -->
+            <div class="loading-section hidden" id="loadingSection">
+                <div class="loading-card">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Analyzing image...</p>
+                    <p class="loading-subtext">Our AI is processing your image</p>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section hidden" id="resultsSection">
+                <div class="results-card">
+                    <div class="results-header">
+                        <h3>Recognition Results</h3>
+                        <div class="confidence-badge" id="confidenceBadge"></div>
+                    </div>
+                    
+                    <div class="primary-result" id="primaryResult">
+                        <!-- Primary result will be inserted here -->
+                    </div>
+
+                    <div class="secondary-results" id="secondaryResults">
+                        <!-- Secondary results will be inserted here -->
+                    </div>
+
+                    <div class="results-actions">
+                        <button class="btn btn-primary" id="tryAnotherBtn">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            Try Another Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Section -->
+            <div class="error-section hidden" id="errorSection">
+                <div class="error-card">
+                    <div class="error-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <h3 class="error-title">Something went wrong</h3>
+                    <p class="error-message" id="errorMessage"></p>
+                    <button class="btn btn-primary" id="retryBtn">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="tech-stack">
+                <span class="tech-badge">TensorFlow Lite</span>
+                <span class="tech-badge">MobileNetV3</span>
+                <span class="tech-badge">FastAPI</span>
+            </div>
+            <p class="footer-text">
+                Powered by advanced machine learning • 
+                <a href="https://github.com/Hussein-dev256/ROI-Based-Image-ID-Android-App" target="_blank" rel="noopener">
+                    View on GitHub
+                </a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
