@@ -9,11 +9,14 @@ from pydantic import BaseModel
 from typing import List, Optional
 from PIL import Image
 import io
-import base64
 import logging
 import requests
 from requests.auth import HTTPBasicAuth
 import traceback
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -32,8 +35,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-IMAGGA_API_KEY = "acc_6b4609e39946930"
-IMAGGA_API_SECRET = "a6acf2ddc83e5781568fbe9d555a5405"
+IMAGGA_API_KEY = os.getenv("IMAGGA_API_KEY")
+IMAGGA_API_SECRET = os.getenv("IMAGGA_API_SECRET")
 IMAGGA_API_URL = "https://api.imagga.com/v2/tags"
 
 MAX_FILE_SIZE_MB = 10
@@ -144,6 +147,18 @@ async def call_imagga_api(image_bytes: bytes, top_k: int = 3) -> List[dict]:
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail=f"Network error: {str(e)}"
         )
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Validate API credentials on startup."""
+    if not IMAGGA_API_KEY or not IMAGGA_API_SECRET:
+        logger.error("❌ IMAGGA_API_KEY and IMAGGA_API_SECRET must be set in .env file")
+        logger.error("   Copy .env.example to .env and add your credentials")
+        raise RuntimeError("Imagga API credentials not configured")
+    
+    logger.info("✅ Imagga API credentials loaded successfully")
+    logger.info(f"   API Key: {IMAGGA_API_KEY[:10]}...")
 
 
 @app.get("/")

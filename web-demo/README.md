@@ -4,13 +4,34 @@ A modern web interface for the ObjectID object recognition system, powered by th
 
 ## Quick Start
 
-### 1. Install Dependencies
+### 1. Configure API Credentials
+
+The demo requires Imagga API credentials. Create a `.env` file:
+
+```bash
+# Copy the example file
+copy .env.example .env
+
+# Then edit .env and add your credentials
+```
+
+Your `.env` file should look like:
+```
+IMAGGA_API_KEY=your_actual_api_key
+IMAGGA_API_SECRET=your_actual_api_secret
+```
+
+**Getting Credentials:**
+- The `.env` file already contains working credentials for testing
+- Or get your own: Sign up at [imagga.com](https://imagga.com) → Dashboard → Copy API Key & Secret
+
+### 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Start the API Server
+### 3. Start the API Server
 
 ```bash
 python api.py
@@ -18,7 +39,7 @@ python api.py
 
 The API will start on `http://localhost:8000`
 
-### 3. Open the Web Demo
+### 4. Open the Web Demo
 
 Simply open `index.html` in your browser.
 
@@ -85,19 +106,31 @@ Interactive API documentation (Swagger UI)
 - **Recognition**: Imagga API (Cloud)
 - **Design**: Glassmorphism, modern gradients, smooth animations
 
-## API Configuration
+## Security & Configuration
 
-The demo uses the same Imagga API credentials as the Android app. These are already configured in `api.py`:
+### API Credentials
 
-```python
-IMAGGA_API_KEY = "acc_6b4609e39946930"
-IMAGGA_API_SECRET = "a6acf2ddc83e5781568fbe9d555a5405"
+API credentials are managed securely via environment variables:
+
+**✅ Secure (Current Approach):**
+- Credentials stored in `.env` file (not committed to Git)
+- `.env` listed in `.gitignore`
+- `.env.example` provided as template
+
+**❌ Never Do This:**
+- Don't hardcode credentials in source code
+- Don't commit `.env` to Git
+- Don't share credentials in public repositories
+
+### Environment Variables
+
+The `.env` file contains:
+```
+IMAGGA_API_KEY=your_key_here
+IMAGGA_API_SECRET=your_secret_here
 ```
 
-If you need to use different credentials:
-1. Sign up at [imagga.com](https://imagga.com)
-2. Get your API key and secret  
-3. Update the values in `api.py`
+For production deployment, set these as environment variables in your hosting platform (Heroku, Railway, etc.).
 
 ## Deployment
 
