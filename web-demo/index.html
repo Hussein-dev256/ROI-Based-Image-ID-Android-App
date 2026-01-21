@@ -1,163 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ObjectID - Advanced AI-powered object recognition in your browser. Upload an image and get instant, accurate object identification using state-of-the-art machine learning.">
-    <title>ObjectID - AI Object Recognition</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="ObjectID - AI-powered image recognition with region selection">
+    <title>ObjectID - Identify Every Moment</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main-styles.css">
 </head>
+
 <body>
-    <!-- Background Effects -->
-    <div class="bg-gradient"></div>
-    <div class="bg-grid"></div>
-    
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                </svg>
-                <h1 class="logo-text">ObjectID</h1>
-            </div>
-            <p class="tagline">AI-Powered Object Recognition</p>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Upload Area -->
-            <div class="upload-section" id="uploadSection">
-                <div class="upload-card">
-                    <div class="upload-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="17 8 12 3 7 8"></polyline>
-                            <line x1="12" y1="3" x2="12" y2="15"></line>
-                        </svg>
-                    </div>
-                    <h2 class="upload-title">Upload an Image</h2>
-                    <p class="upload-description">Drop your image here or click to browse</p>
-                    <input type="file" id="imageInput" accept="image/*" hidden>
-                    <button class="btn btn-primary" id="uploadBtn">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="17 8 12 3 7 8"></polyline>
-                            <line x1="12" y1="3" x2="12" y2="15"></line>
-                        </svg>
-                        Choose Image
-                    </button>
-                </div>
-            </div>
-
-            <!-- Preview Section -->
-            <div class="preview-section hidden" id="previewSection">
-                <div class="preview-card">
-                    <div class="preview-header">
-                        <h3>Preview</h3>
-                        <button class="btn btn-secondary btn-sm" id="changeImageBtn">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            </svg>
-                            Change Image
-                        </button>
-                    </div>
-                    <div class="image-preview-container">
-                        <img id="previewImage" alt="Preview" class="preview-image">
-                    </div>
-                    <button class="btn btn-primary btn-large" id="identifyBtn">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
-                        </svg>
-                        Identify Object
-                    </button>
-                </div>
-            </div>
-
-            <!-- Loading Section -->
-            <div class="loading-section hidden" id="loadingSection">
-                <div class="loading-card">
-                    <div class="spinner"></div>
-                    <p class="loading-text">Analyzing image...</p>
-                    <p class="loading-subtext">Our AI is processing your image</p>
-                </div>
-            </div>
-
-            <!-- Results Section -->
-            <div class="results-section hidden" id="resultsSection">
-                <div class="results-card">
-                    <div class="results-header">
-                        <h3>Recognition Results</h3>
-                        <div class="confidence-badge" id="confidenceBadge"></div>
-                    </div>
-                    
-                    <div class="primary-result" id="primaryResult">
-                        <!-- Primary result will be inserted here -->
-                    </div>
-
-                    <div class="secondary-results" id="secondaryResults">
-                        <!-- Secondary results will be inserted here -->
-                    </div>
-
-                    <div class="results-actions">
-                        <button class="btn btn-primary" id="tryAnotherBtn">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                <polyline points="17 8 12 3 7 8"></polyline>
-                                <line x1="12" y1="3" x2="12" y2="15"></line>
-                            </svg>
-                            Try Another Image
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Error Section -->
-            <div class="error-section hidden" id="errorSection">
-                <div class="error-card">
-                    <div class="error-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="8" x2="12" y2="12"></line>
-                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                        </svg>
-                    </div>
-                    <h3 class="error-title">Something went wrong</h3>
-                    <p class="error-message" id="errorMessage"></p>
-                    <button class="btn btn-primary" id="retryBtn">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="23 4 23 10 17 10"></polyline>
-                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                        </svg>
-                        Try Again
-                    </button>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="tech-stack">
-                <span class="tech-badge">TensorFlow Lite</span>
-                <span class="tech-badge">MobileNetV3</span>
-                <span class="tech-badge">FastAPI</span>
-            </div>
-            <p class="footer-text">
-                Powered by advanced machine learning • 
-                <a href="https://github.com/Hussein-dev256/ROI-Based-Image-ID-Android-App" target="_blank" rel="noopener">
-                    View on GitHub
+    <!-- Navigation Bar -->
+    <nav class="navbar glass" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">ObjectID</div>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" data-page="home">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <span>Scan</span>
                 </a>
-            </p>
-        </footer>
-    </div>
+                <a href="#" class="nav-link" data-page="history">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                        <path d="M3 3v5h5"></path>
+                        <polyline points="12 7 12 12 15 15"></polyline>
+                    </svg>
+                    <span>History</span>
+                </a>
+                <a href="#" class="nav-link" data-page="permissions">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>Permissions</span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
-    <script src="app.js"></script>
+    <!-- Landing Page -->
+    <section class="page active" id="landingPage">
+        <div class="landing-container">
+            <div class="landing-content glass-card">
+                <div class="landing-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                </div>
+                <h1 class="landing-title">Identify every moment</h1>
+                <p class="landing-subtitle">Powerful AI-powered image recognition. Select any region and discover what's
+                    inside.</p>
+                <button class="btn-primary btn-large" id="getStartedBtn">Get Started</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Home / Scan Page -->
+    <section class="page" id="homePage">
+        <div class="page-content">
+            <div class="upload-area glass-card" id="uploadArea">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <div class="upload-placeholder" id="uploadPlaceholder">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <h3>Upload or Capture Image</h3>
+                    <p>Select an image to start recognition</p>
+                </div>
+                <canvas id="imageCanvas" class="hidden"></canvas>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-secondary" id="uploadBtn">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    Choose Image
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Selection Page -->
+    <section class="page" id="roiPage">
+        <div class="page-content">
+            <div class="roi-container glass-card">
+                <div class="roi-header">
+                    <h2>Select Region of Interest</h2>
+                    <p>Drag and resize the box to select the area you want to identify</p>
+                </div>
+                <div class="roi-canvas-wrapper" id="roiCanvasWrapper">
+                    <canvas id="roiCanvas"></canvas>
+                    <div class="roi-box" id="roiBox">
+                        <div class="roi-handle roi-handle-nw"></div>
+                        <div class="roi-handle roi-handle-ne"></div>
+                        <div class="roi-handle roi-handle-sw"></div>
+                        <div class="roi-handle roi-handle-se"></div>
+                    </div>
+                </div>
+                <div class="roi-actions">
+                    <button class="btn-secondary" id="cancelROI">Cancel</button>
+                    <button class="btn-primary" id="recognizeBtn">Recognize</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Page -->
+    <section class="page" id="loadingPage">
+        <div class="loading-container glass-card">
+            <div class="loader"></div>
+            <h3>Analyzing image...</h3>
+            <p>Our AI is processing your selection</p>
+        </div>
+    </section>
+
+    <!-- Results Page -->
+    <section class="page" id="resultsPage">
+        <div class="page-content">
+            <div class="results-container glass-card">
+                <div class="result-image-preview">
+                    <img id="resultImagePreview" alt="Analyzed region">
+                </div>
+                <div class="result-content">
+                    <div class="result-label" id="resultLabel"></div>
+                    <div class="result-confidence" id="resultConfidence"></div>
+                    <div class="result-alternatives" id="resultAlternatives"></div>
+                </div>
+                <div class="result-actions">
+                    <button class="btn-secondary" id="adjustRegionBtn">Adjust Region</button>
+                    <button class="btn-primary" id="scanAgainBtn">Scan Again</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Page -->
+    <section class="page" id="historyPage">
+        <div class="page-content">
+            <div class="history-header">
+                <h2>Recognition History</h2>
+                <button class="btn-link" id="clearHistoryBtn">Clear All</button>
+            </div>
+            <div class="history-grid" id="historyGrid">
+                <div class="history-empty">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                        <path d="M3 3v5h5"></path>
+                    </svg>
+                    <p>No recognition history yet</p>
+                    <span>Start scanning to build your history</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Permissions Page -->
+    <section class="page" id="permissionsPage">
+        <div class="page-content">
+            <div class="permissions-container glass-card">
+                <h2>Permissions & Privacy</h2>
+                <div class="permission-item">
+                    <div class="permission-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                    </div>
+                    <div class="permission-content">
+                        <h3>Image Upload & Storage</h3>
+                        <p>We need access to your images to perform object recognition. Images are processed securely
+                            and are not stored permanently unless you choose to save them to history.</p>
+                    </div>
+                </div>
+                <div class="permission-item">
+                    <div class="permission-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <div class="permission-content">
+                        <h3>Privacy & Data Protection</h3>
+                        <p>Your images are sent to a secure cloud API for recognition. We do not use your images for
+                            training or share them with third parties. All processing happens in real-time and images
+                            are not retained by the API provider.</p>
+                    </div>
+                </div>
+                <div class="permission-item">
+                    <div class="permission-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </div>
+                    <div class="permission-content">
+                        <h3>Optional Features</h3>
+                        <p>Recognition history is stored locally in your browser. You can clear it anytime. No account
+                            or login required.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="main-app.js"></script>
 </body>
+
 </html>

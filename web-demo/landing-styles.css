@@ -64,7 +64,7 @@ body::before {
     text-align: center;
 }
 
-/* Hero Image */
+/* Hero Image - Integrated Design */
 .lens-container {
     position: relative;
     width: 280px;
@@ -72,12 +72,81 @@ body::before {
     margin-bottom: 3.5rem;
 }
 
+.lens-container::before {
+    content: '';
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(circle,
+            rgba(0, 217, 255, 0.15),
+            rgba(255, 45, 149, 0.12),
+            transparent 70%);
+    filter: blur(40px);
+    animation: ambientGlow 4s ease-in-out infinite alternate;
+    z-index: -1;
+}
+
+@keyframes ambientGlow {
+    0% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
 .hero-image {
     width: 100%;
     height: 100%;
     object-fit: contain;
     animation: float 6s ease-in-out infinite;
-    filter: drop-shadow(0 10px 30px rgba(0, 217, 255, 0.3));
+    position: relative;
+    z-index: 2;
+
+    filter:
+        drop-shadow(0 0 40px rgba(0, 217, 255, 0.4)) drop-shadow(0 0 60px rgba(255, 45, 149, 0.3)) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+
+    mask-image: radial-gradient(ellipse 95% 95% at center,
+            black 60%,
+            rgba(0, 0, 0, 0.9) 75%,
+            rgba(0, 0, 0, 0.6) 85%,
+            transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 95% 95% at center,
+            black 60%,
+            rgba(0, 0, 0, 0.9) 75%,
+            rgba(0, 0, 0, 0.6) 85%,
+            transparent 100%);
+}
+
+.lens-container::after {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    background:
+        radial-gradient(circle at 40% 40%,
+            rgba(0, 217, 255, 0.2),
+            transparent 50%),
+        radial-gradient(circle at 60% 60%,
+            rgba(255, 45, 149, 0.15),
+            transparent 50%);
+    filter: blur(30px);
+    mix-blend-mode: screen;
+    opacity: 0.8;
+    z-index: 1;
+    pointer-events: none;
+    animation: lightBleed 3s ease-in-out infinite alternate;
+}
+
+@keyframes lightBleed {
+    0% {
+        opacity: 0.6;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 @keyframes float {
