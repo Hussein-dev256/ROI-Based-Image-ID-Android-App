@@ -4,28 +4,46 @@ ObjectID is an Android application that combines cloud-based and on-device machi
 
 ## Features
 
-- Capture photos using device camera
+- Capture images using device camera
 - Select images from gallery
-- Draw annotations around objects of interest
-- Real-time object recognition using:
-  - Imagga Cloud API (primary)
-  - TensorFlow Lite (fallback)
-- Confidence scores for recognition results
-- Error handling and retry mechanisms
-- Efficient image processing and memory management
+- Multiple recognition modes:
+  - **Fast**: On-device TensorFlow Lite
+  - **Accurate**: Imagga API (cloud-based)
+  - **Auto**: Falls back to on-device if API fails
+- Object detection with bounding boxes
+- Confidence scoring for detected objects
+- Save and share recognition results
+- Dark/Light theme support
+- Smooth animations and transitions
+- Optimized for performance and battery life
+- Clean and modern Material Design UI
 
 ## Prerequisites
 
-- Android 5.0 (API level 21) or higher
-- Camera permission
-- Internet connection (for Imagga API)
-- Android Studio Arctic Fox or newer
+- Android Studio Giraffe or later
+- Android SDK 33
+- Kotlin 1.8.0 or later
+- An API key from [Imagga](https://imagga.com/) for cloud-based recognition
+- Android device or emulator with camera support
 
 ## Getting Started
 
-1. Clone the repository
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Hussein-dev256/ROI-Based-Image-ID-Android-App.git
+   ```
+
 2. Open the project in Android Studio
-3. Build and run the app on an Android device or emulator
+
+3. Create a `secrets.properties` file in the project root with your Imagga API credentials:
+   ```properties
+   IMAGGA_API_KEY=your_api_key_here
+   IMAGGA_API_SECRET=your_api_secret_here
+   ```
+
+4. Sync the project with Gradle files
+
+5. Build and run the app on an emulator or physical device
 
 ## Project Structure
 
@@ -104,6 +122,10 @@ The app implements several error handling mechanisms:
 4. Memory leak prevention
 5. Network timeout handling
 
+## API Key Security
+
+API keys are stored in a `secrets.properties` file that is not committed to version control. The app uses the `local.properties` file to access these values during build time.
+
 ## Contributing
 
 1. Fork the repository
@@ -114,10 +136,18 @@ The app implements several error handling mechanisms:
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [Imagga](https://imagga.com/) for their image recognition API
+- TensorFlow for the on-device machine learning model
+- Android Developer documentation
+- Material Design guidelines
 
 ## Acknowledgments
 
 - Imagga API for cloud-based image recognition
 - TensorFlow Lite for on-device machine learning
 - AndroidX libraries for modern Android development
+
