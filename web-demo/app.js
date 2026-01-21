@@ -80,12 +80,11 @@ const app = {
             const img = new Image();
             img.onload = () => {
                 const canvas = document.getElementById('roiCanvas');
-                const wrapper = document.getElementById('roiCanvasWrapper');
                 const ctx = canvas.getContext('2d');
 
                 // Calculate scaled dimensions to fit viewport
-                const maxWidth = Math.min(1200, wrapper.clientWidth - 40);
-                const maxHeight = Math.min(window.innerHeight * 0.6, 600);
+                const maxWidth = 1200;
+                const maxHeight = 600;
 
                 let width = img.width;
                 let height = img.height;
@@ -114,7 +113,7 @@ const app = {
                     imageDataURL: e.target.result
                 };
 
-                // Initialize ROI
+                // Initialize ROI and show
                 this.initializeROI(width, height);
                 this.showView('roi');
             };
@@ -139,7 +138,7 @@ const app = {
         };
 
         this.updateROIBox();
-        this.setupROIInteraction();
+        // Setup will happen after view is shown
     },
 
     updateROIBox() {
@@ -155,7 +154,13 @@ const app = {
     setupROIInteraction() {
         const canvas = document.getElementById('roiCanvas');
         const box = document.getElementById('roiSelector');
-        const wrapper = document.getElementById('roiCanvasWrapper');
+        const wrapper = document.querySelector('.roi-workspace'); // Changed from getElementById
+
+        // Null checks - return early if elements don't exist
+        if (!canvas || !box || !wrapper) {
+            console.error('ROI elements not found', { canvas: !!canvas, box: !!box, wrapper: !!wrapper });
+            return;
+        }
 
         // Get mouse position relative to canvas
         const getMousePos = (e) => {
@@ -493,6 +498,15 @@ const app = {
     showView(name) {
         Object.values(this.views).forEach(view => view.classList.remove('active'));
         this.views[name]?.classList.add('active');
+
+        // Setup ROI interaction when ROI view becomes active
+        if (name === 'roi' && this.state.currentImageData) {
+            // Give DOM time to render
+            setTimeout(() => {
+                this.updateROIBox();
+                this.setupROIInteraction();
+            }, 50);
+        }
     },
 
     showError(message) {
