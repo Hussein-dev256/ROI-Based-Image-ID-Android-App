@@ -1,183 +1,503 @@
 const API_URL = 'http://localhost:8000';
 
-const elements = {
-    uploadSection: document.getElementById('uploadSection'),
-    previewSection: document.getElementById('previewSection'),
-    loadingSection: document.getElementById('loadingSection'),
-    resultsSection: document.getElementById('resultsSection'),
-    errorSection: document.getElementById('errorSection'),
-
-    imageInput: document.getElementById('imageInput'),
-    uploadBtn: document.getElementById('uploadBtn'),
-    changeImageBtn: document.getElementById('changeImageBtn'),
-    identifyBtn: document.getElementById('identifyBtn'),
-    tryAnotherBtn: document.getElementById('tryAnotherBtn'),
-    retryBtn: document.getElementById('retryBtn'),
-
-    previewImage: document.getElementById('previewImage'),
-    primaryResult: document.getElementById('primaryResult'),
-    secondaryResults: document.getElementById('secondaryResults'),
-    confidenceBadge: document.getElementById('confidenceBadge'),
-    errorMessage: document.getElementById('errorMessage')
-};
-
-let currentImage = null;
-
-function showSection(sectionToShow) {
-    const sections = [
-        elements.uploadSection,
-        elements.previewSection,
-        elements.loadingSection,
-        elements.resultsSection,
-        elements.errorSection
-    ];
-
-    sections.forEach(section => {
-        if (section === sectionToShow) {
-            section.classList.remove('hidden');
-        } else {
-            section.classList.add('hidden');
+const app = {
+    state: {
+        currentImage: null,
+        currentImageData: null,
+        history: [],
+        roi: {
+            x: 0,
+            y: 0,
+            width: 200,
+            height: 200,
+            isDragging: false,
+            isResizing: false,
+            dragStartX: 0,
+            dragStartY: 0,
+            resizeHandle: null
         }
-    });
-}
+    },
 
-function handleImageSelect(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+    views: {
+        scan: document.getElementById('scanView'),
+        roi: document.getElementById('roiView'),
+        loading: document.getElementById('loadingView'),
+        results: document.getElementById('resultsView'),
+        history: document.getElementById('historyView'),
+        permissions: document.getElementById('permissionsView')
+    },
 
-    if (!file.type.startsWith('image/')) {
-        showError('Please select a valid image file');
-        return;
-    }
+    init() {
+        this.loadHistory();
+        this.setupNavigation();
+        this.setupUpload();
+        this.setupResults();
+        this.setupHistory();
+        this.showView('scan');
+    },
 
-    if (file.size > 10 * 1024 * 1024) {
-        showError('Image too large. Please select an image under 10MB');
-        return;
-    }
+    setupNavigation() {
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const view = btn.dataset.view;
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
 
-    currentImage = file;
+                if (view === 'history') this.renderHistory();
+                this.showView(view);
+            });
+        });
+    },
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        elements.previewImage.src = e.target.result;
-        showSection(elements.previewSection);
-    };
-    reader.readAsDataURL(file);
-}
+    setupUpload() {
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('fileInput');
 
-async function identifyObject() {
-    if (!currentImage) return;
+        uploadBtn.addEventListener('click', () => fileInput.click());
 
-    showSection(elements.loadingSection);
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
 
-    const formData = new FormData();
-    formData.append('file', currentImage);
-    formData.append('top_k', '3');
-    formData.append('threshold', '0.3');
+            if (!file.type.startsWith('image/')) {
+                this.showError('Please select a valid image file');
+                return;
+            }
 
-    try {
-        const response = await fetch(`${API_URL}/identify`, {
-            method: 'POST',
-            body: formData
+            if (file.size > 10 * 1024 * 1024) {
+                this.showError('Image too large (max 10MB)');
+                return;
+            }
+
+            this.state.currentImage = file;
+            this.loadImageToROI(file);
+        });
+    },
+
+    loadImageToROI(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.getElementById('roiCanvas');
+                const wrapper = document.getElementById('roiCanvasWrapper');
+                const ctx = canvas.getContext('2d');
+
+                // Calculate scaled dimensions to fit viewport
+                const maxWidth = Math.min(1200, wrapper.clientWidth - 40);
+                const maxHeight = Math.min(window.innerHeight * 0.6, 600);
+
+                let width = img.width;
+                let height = img.height;
+
+                // Scale to fit
+                const scale = Math.min(maxWidth / width, maxHeight / height, 1);
+                width = Math.floor(width * scale);
+                height = Math.floor(height * scale);
+
+                // Set canvas size
+                canvas.width = width;
+                canvas.height = height;
+
+                // Draw with high quality
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Store image data
+                this.state.currentImageData = {
+                    originalWidth: img.width,
+                    originalHeight: img.height,
+                    displayWidth: width,
+                    displayHeight: height,
+                    scale: scale,
+                    imageDataURL: e.target.result
+                };
+
+                // Initialize ROI
+                this.initializeROI(width, height);
+                this.showView('roi');
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    },
+
+    initializeROI(canvasWidth, canvasHeight) {
+        // Set initial ROI in center of canvas
+        const size = Math.min(canvasWidth, canvasHeight) * 0.5;
+        this.state.roi = {
+            x: (canvasWidth - size) / 2,
+            y: (canvasHeight - size) / 2,
+            width: size,
+            height: size,
+            isDragging: false,
+            isResizing: false,
+            dragStartX: 0,
+            dragStartY: 0,
+            resizeHandle: null
+        };
+
+        this.updateROIBox();
+        this.setupROIInteraction();
+    },
+
+    updateROIBox() {
+        const box = document.getElementById('roiSelector');
+        const roi = this.state.roi;
+
+        box.style.left = roi.x + 'px';
+        box.style.top = roi.y + 'px';
+        box.style.width = roi.width + 'px';
+        box.style.height = roi.height + 'px';
+    },
+
+    setupROIInteraction() {
+        const canvas = document.getElementById('roiCanvas');
+        const box = document.getElementById('roiSelector');
+        const wrapper = document.getElementById('roiCanvasWrapper');
+
+        // Get mouse position relative to canvas
+        const getMousePos = (e) => {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        };
+
+        // Check if mouse is over resize handle
+        const getResizeHandle = (mouseX, mouseY) => {
+            const roi = this.state.roi;
+            const handleSize = 12;
+
+            const handles = {
+                'top-left': { x: roi.x, y: roi.y },
+                'top-right': { x: roi.x + roi.width, y: roi.y },
+                'bottom-left': { x: roi.x, y: roi.y + roi.height },
+                'bottom-right': { x: roi.x + roi.width, y: roi.y + roi.height }
+            };
+
+            for (let [name, pos] of Object.entries(handles)) {
+                if (Math.abs(mouseX - pos.x) < handleSize &&
+                    Math.abs(mouseY - pos.y) < handleSize) {
+                    return name;
+                }
+            }
+            return null;
+        };
+
+        // Check if mouse is inside ROI box
+        const isInsideROI = (mouseX, mouseY) => {
+            const roi = this.state.roi;
+            return mouseX >= roi.x && mouseX <= roi.x + roi.width &&
+                mouseY >= roi.y && mouseY <= roi.y + roi.height;
+        };
+
+        // Mouse down
+        wrapper.addEventListener('mousedown', (e) => {
+            const pos = getMousePos(e);
+            const handle = getResizeHandle(pos.x, pos.y);
+
+            if (handle) {
+                // Start resizing
+                this.state.roi.isResizing = true;
+                this.state.roi.resizeHandle = handle;
+                this.state.roi.dragStartX = pos.x;
+                this.state.roi.dragStartY = pos.y;
+                this.state.roi.startX = this.state.roi.x;
+                this.state.roi.startY = this.state.roi.y;
+                this.state.roi.startWidth = this.state.roi.width;
+                this.state.roi.startHeight = this.state.roi.height;
+            } else if (isInsideROI(pos.x, pos.y)) {
+                // Start dragging
+                this.state.roi.isDragging = true;
+                this.state.roi.dragStartX = pos.x - this.state.roi.x;
+                this.state.roi.dragStartY = pos.y - this.state.roi.y;
+            }
+
+            e.preventDefault();
         });
 
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.detail || `Server error: ${response.status}`);
+        // Mouse move
+        wrapper.addEventListener('mousemove', (e) => {
+            const pos = getMousePos(e);
+            const roi = this.state.roi;
+            const data = this.state.currentImageData;
+
+            // Update cursor
+            const handle = getResizeHandle(pos.x, pos.y);
+            if (handle) {
+                if (handle.includes('top-left') || handle.includes('bottom-right')) {
+                    wrapper.style.cursor = 'nwse-resize';
+                } else {
+                    wrapper.style.cursor = 'nesw-resize';
+                }
+            } else if (isInsideROI(pos.x, pos.y)) {
+                wrapper.style.cursor = 'move';
+            } else {
+                wrapper.style.cursor = 'default';
+            }
+
+            // Handle dragging
+            if (roi.isDragging) {
+                let newX = pos.x - roi.dragStartX;
+                let newY = pos.y - roi.dragStartY;
+
+                // Constrain to canvas
+                newX = Math.max(0, Math.min(newX, data.displayWidth - roi.width));
+                newY = Math.max(0, Math.min(newY, data.displayHeight - roi.height));
+
+                roi.x = newX;
+                roi.y = newY;
+                this.updateROIBox();
+            }
+
+            // Handle resizing
+            if (roi.isResizing) {
+                const dx = pos.x - roi.dragStartX;
+                const dy = pos.y - roi.dragStartY;
+                const minSize = 40;
+
+                let newX = roi.startX;
+                let newY = roi.startY;
+                let newWidth = roi.startWidth;
+                let newHeight = roi.startHeight;
+
+                if (roi.resizeHandle === 'bottom-right') {
+                    newWidth = Math.max(minSize, roi.startWidth + dx);
+                    newHeight = Math.max(minSize, roi.startHeight + dy);
+                } else if (roi.resizeHandle === 'bottom-left') {
+                    newWidth = Math.max(minSize, roi.startWidth - dx);
+                    newHeight = Math.max(minSize, roi.startHeight + dy);
+                    newX = roi.startX + roi.startWidth - newWidth;
+                } else if (roi.resizeHandle === 'top-right') {
+                    newWidth = Math.max(minSize, roi.startWidth + dx);
+                    newHeight = Math.max(minSize, roi.startHeight - dy);
+                    newY = roi.startY + roi.startHeight - newHeight;
+                } else if (roi.resizeHandle === 'top-left') {
+                    newWidth = Math.max(minSize, roi.startWidth - dx);
+                    newHeight = Math.max(minSize, roi.startHeight - dy);
+                    newX = roi.startX + roi.startWidth - newWidth;
+                    newY = roi.startY + roi.startHeight - newHeight;
+                }
+
+                // Constrain to canvas
+                if (newX >= 0 && newY >= 0 &&
+                    newX + newWidth <= data.displayWidth &&
+                    newY + newHeight <= data.displayHeight) {
+                    roi.x = newX;
+                    roi.y = newY;
+                    roi.width = newWidth;
+                    roi.height = newHeight;
+                    this.updateROIBox();
+                }
+            }
+        });
+
+        // Mouse up
+        document.addEventListener('mouseup', () => {
+            this.state.roi.isDragging = false;
+            this.state.roi.isResizing = false;
+            this.state.roi.resizeHandle = null;
+            wrapper.style.cursor = 'default';
+        });
+
+        // Buttons
+        document.getElementById('roiCancelBtn').addEventListener('click', () => {
+            this.showView('scan');
+        });
+
+        document.getElementById('roiRecognizeBtn').addEventListener('click', () => {
+            this.performRecognition();
+        });
+    },
+
+    async performRecognition() {
+        this.showView('loading');
+
+        try {
+            const blob = await this.extractROIBlob();
+
+            const formData = new FormData();
+            formData.append('file', blob, 'roi.jpg');
+            formData.append('top_k', '3');
+
+            const response = await fetch(`${API_URL}/identify`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                const error = await response.json().catch(() => ({}));
+                throw new Error(error.detail || 'Recognition failed');
+            }
+
+            const data = await response.json();
+            this.displayResults(data.predictions, blob);
+
+        } catch (error) {
+            console.error('Recognition error:', error);
+            this.showError(error.message);
+            this.showView('roi');
+        }
+    },
+
+    extractROIBlob() {
+        return new Promise((resolve, reject) => {
+            const roi = this.state.roi;
+            const data = this.state.currentImageData;
+
+            // Scale coordinates to original image
+            const scaleX = data.originalWidth / data.displayWidth;
+            const scaleY = data.originalHeight / data.displayHeight;
+
+            const cropX = Math.round(roi.x * scaleX);
+            const cropY = Math.round(roi.y * scaleY);
+            const cropWidth = Math.round(roi.width * scaleX);
+            const cropHeight = Math.round(roi.height * scaleY);
+
+            // Load original image
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                canvas.width = cropWidth;
+                canvas.height = cropHeight;
+
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.drawImage(img, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        resolve(blob);
+                    } else {
+                        reject(new Error('Failed to create blob'));
+                    }
+                }, 'image/jpeg', 0.92);
+            };
+
+            img.onerror = () => reject(new Error('Failed to load image'));
+            img.src = data.imageDataURL;
+        });
+    },
+
+    setupResults() {
+        document.getElementById('resultAdjustBtn').addEventListener('click', () => {
+            this.showView('roi');
+        });
+
+        document.getElementById('resultNewBtn').addEventListener('click', () => {
+            this.state.currentImage = null;
+            document.getElementById('fileInput').value = '';
+            this.showView('scan');
+        });
+    },
+
+    displayResults(predictions, blob) {
+        if (!predictions || predictions.length === 0) {
+            this.showError('No objects detected');
+            this.showView('roi');
+            return;
         }
 
-        const data = await response.json();
-        displayResults(data.predictions);
+        const url = URL.createObjectURL(blob);
+        document.getElementById('resultImage').src = url;
 
-    } catch (error) {
-        console.error('Identification error:', error);
-        showError(error.message || 'Failed to identify object. Please try again.');
+        const primary = predictions[0];
+        const confidence = Math.round(primary.confidence * 100);
+
+        document.getElementById('resultLabel').textContent = this.formatLabel(primary.label);
+        document.getElementById('confidenceFill').style.width = confidence + '%';
+        document.getElementById('confidenceValue').textContent = `${confidence}% Match`;
+
+        const alts = document.getElementById('resultAlternatives');
+        if (predictions.length > 1) {
+            alts.innerHTML = predictions.slice(1).map(p => {
+                const conf = Math.round(p.confidence * 100);
+                return `
+                    <div class="alt-item">
+                        <span class="alt-label">${this.formatLabel(p.label)}</span>
+                        <span class="alt-confidence">${conf}%</span>
+                    </div>
+                `;
+            }).join('');
+        } else {
+            alts.innerHTML = '';
+        }
+
+        this.saveToHistory({
+            image: url,
+            label: primary.label,
+            confidence: primary.confidence,
+            timestamp: Date.now()
+        });
+
+        this.showView('results');
+    },
+
+    setupHistory() {
+        document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+            if (confirm('Clear all scan history?')) {
+                this.state.history = [];
+                localStorage.removeItem('objectid_history');
+                this.renderHistory();
+            }
+        });
+    },
+
+    saveToHistory(item) {
+        this.state.history.unshift(item);
+        if (this.state.history.length > 30) this.state.history.pop();
+        localStorage.setItem('objectid_history', JSON.stringify(this.state.history));
+    },
+
+    loadHistory() {
+        const saved = localStorage.getItem('objectid_history');
+        if (saved) {
+            this.state.history = JSON.parse(saved);
+        }
+    },
+
+    renderHistory() {
+        const grid = document.getElementById('historyGrid');
+
+        if (this.state.history.length === 0) {
+            grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);"><p>No scan history yet</p></div>';
+            return;
+        }
+
+        grid.innerHTML = this.state.history.map(item => `
+            <div class="history-item">
+                <img src="${item.image}" alt="${item.label}" class="history-img">
+                <div class="history-label">${this.formatLabel(item.label)}</div>
+                <div class="history-time">${this.timeAgo(item.timestamp)}</div>
+            </div>
+        `).join('');
+    },
+
+    formatLabel(label) {
+        return label.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    },
+
+    timeAgo(timestamp) {
+        const seconds = Math.floor((Date.now() - timestamp) / 1000);
+        if (seconds < 60) return 'Just now';
+        if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+        if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+        return `${Math.floor(seconds / 86400)}d ago`;
+    },
+
+    showView(name) {
+        Object.values(this.views).forEach(view => view.classList.remove('active'));
+        this.views[name]?.classList.add('active');
+    },
+
+    showError(message) {
+        alert(message);
     }
-}
+};
 
-function displayResults(predictions) {
-    if (!predictions || predictions.length === 0) {
-        showError('No objects detected in the image');
-        return;
-    }
-
-    const primary = predictions[0];
-    const confidence = Math.round(primary.confidence * 100);
-
-    elements.primaryResult.innerHTML = `
-        <div class="primary-label">${formatLabel(primary.label)}</div>
-        <div class="primary-confidence">${confidence}% confidence</div>
-    `;
-
-    elements.confidenceBadge.textContent = `${confidence}% Match`;
-    elements.confidenceBadge.className = 'confidence-badge ' + getConfidenceClass(primary.confidence);
-
-    if (predictions.length > 1) {
-        const secondaryHTML = predictions.slice(1).map(pred => {
-            const conf = Math.round(pred.confidence * 100);
-            return `
-                <div class="result-item">
-                    <span class="result-label">${formatLabel(pred.label)}</span>
-                    <span class="result-confidence">${conf}%</span>
-                </div>
-            `;
-        }).join('');
-
-        elements.secondaryResults.innerHTML = secondaryHTML;
-    } else {
-        elements.secondaryResults.innerHTML = '';
-    }
-
-    showSection(elements.resultsSection);
-}
-
-function formatLabel(label) {
-    return label
-        .split('_')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ');
-}
-
-function getConfidenceClass(confidence) {
-    if (confidence >= 0.7) return 'confidence-high';
-    if (confidence >= 0.4) return 'confidence-medium';
-    return 'confidence-low';
-}
-
-function showError(message) {
-    elements.errorMessage.textContent = message;
-    showSection(elements.errorSection);
-}
-
-function resetToUpload() {
-    currentImage = null;
-    elements.imageInput.value = '';
-    elements.previewImage.src = '';
-    showSection(elements.uploadSection);
-}
-
-elements.uploadBtn.addEventListener('click', () => {
-    elements.imageInput.click();
-});
-
-elements.imageInput.addEventListener('change', handleImageSelect);
-
-elements.changeImageBtn.addEventListener('click', () => {
-    elements.imageInput.click();
-});
-
-elements.identifyBtn.addEventListener('click', identifyObject);
-
-elements.tryAnotherBtn.addEventListener('click', resetToUpload);
-
-elements.retryBtn.addEventListener('click', () => {
-    if (currentImage) {
-        identifyObject();
-    } else {
-        resetToUpload();
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    showSection(elements.uploadSection);
-});
+document.addEventListener('DOMContentLoaded', () => app.init());
