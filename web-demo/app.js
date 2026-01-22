@@ -5,6 +5,13 @@ const app = {
         currentImage: null,
         currentImageData: null,
         history: [],
+        imageStage: {
+            zoom: 1,
+            panX: 0,
+            panY: 0,
+            minZoom: 0.5,
+            maxZoom: 3
+        },
         roi: {
             x: 0,
             y: 0,
@@ -151,6 +158,72 @@ const app = {
         box.style.height = roi.height + 'px';
     },
 
+    setupImageStage() {
+        const zoomInBtn = document.getElementById('zoomInBtn');
+        const zoomOutBtn = document.getElementById('zoomOutBtn');
+        const resetViewBtn = document.getElementById('resetViewBtn');
+        const canvas = document.getElementById('roiCanvas');
+
+        if (!zoomInBtn || !zoomOutBtn || !resetViewBtn || !canvas) return;
+
+        // Zoom in
+        zoomInBtn.addEventListener('click', () => {
+            const stage = this.state.imageStage;
+            if (stage.zoom < stage.maxZoom) {
+                stage.zoom = Math.min(stage.zoom + 0.25, stage.maxZoom);
+                this.applyImageTransform();
+            }
+        });
+
+        // Zoom out
+        zoomOutBtn.addEventListener('click', () => {
+            const stage = this.state.imageStage;
+            if (stage.zoom > stage.minZoom) {
+                stage.zoom = Math.max(stage.zoom - 0.25, stage.minZoom);
+                this.applyImageTransform();
+            }
+        });
+
+        // Reset view
+        resetViewBtn.addEventListener('click', () => {
+            this.resetImageStage();
+        });
+
+        // Mouse wheel zoom
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const stage = this.state.imageStage;
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            stage.zoom = Math.max(stage.minZoom, Math.min(stage.maxZoom, stage.zoom + delta));
+            this.applyImageTransform();
+        });
+    },
+
+    applyImageTransform() {
+        const canvas = document.getElementById('roiCanvas');
+        const stage = this.state.imageStage;
+        const zoomLevel = document.getElementById('zoomLevel');
+
+        if (canvas) {
+            canvas.style.transform = `scale(${stage.zoom}) translate(${stage.panX}px, ${stage.panY}px)`;
+        }
+
+        if (zoomLevel) {
+            zoomLevel.textContent = `${Math.round(stage.zoom * 100)}%`;
+        }
+    },
+
+    resetImageStage() {
+        this.state.imageStage = {
+            zoom: 1,
+            panX: 0,
+            panY: 0,
+            minZoom: 0.5,
+            maxZoom: 3
+        };
+        this.applyImageTransform();
+    },
+
     setupROIInteraction() {
         const canvas = document.getElementById('roiCanvas');
         const box = document.getElementById('roiSelector');
@@ -204,6 +277,8 @@ const app = {
             const pos = getMousePos(e);
             const handle = getResizeHandle(pos.x, pos.y);
 
+            console.log('Mouse down at', pos, 'Handle:', handle, 'Inside:', isInsideROI(pos.x, pos.y));
+
             if (handle) {
                 // Start resizing
                 this.state.roi.isResizing = true;
@@ -214,35 +289,25 @@ const app = {
                 this.state.roi.startY = this.state.roi.y;
                 this.state.roi.startWidth = this.state.roi.width;
                 this.state.roi.startHeight = this.state.roi.height;
+                console.log('✅ Started resizing from', handle);
             } else if (isInsideROI(pos.x, pos.y)) {
                 // Start dragging
                 this.state.roi.isDragging = true;
                 this.state.roi.dragStartX = pos.x - this.state.roi.x;
                 this.state.roi.dragStartY = pos.y - this.state.roi.y;
+                console.log('✅ Started dragging');
             }
 
             e.preventDefault();
         });
 
-        // Mouse move
-        wrapper.addEventListener('mousemove', (e) => {
+        // Mouse move - ATTACH TO DOCUMENT FOR GLOBAL TRACKING
+        document.addEventListener('mousemove', (e) => {
+            if (!this.state.currentImageData) return;
+
             const pos = getMousePos(e);
             const roi = this.state.roi;
             const data = this.state.currentImageData;
-
-            // Update cursor
-            const handle = getResizeHandle(pos.x, pos.y);
-            if (handle) {
-                if (handle.includes('top-left') || handle.includes('bottom-right')) {
-                    wrapper.style.cursor = 'nwse-resize';
-                } else {
-                    wrapper.style.cursor = 'nesw-resize';
-                }
-            } else if (isInsideROI(pos.x, pos.y)) {
-                wrapper.style.cursor = 'move';
-            } else {
-                wrapper.style.cursor = 'default';
-            }
 
             // Handle dragging
             if (roi.isDragging) {
@@ -300,8 +365,31 @@ const app = {
             }
         });
 
+        // Hover effects - attach to wrapper for cursor changes
+        wrapper.addEventListener('mousemove', (e) => {
+            if (this.state.roi.isDragging || this.state.roi.isResizing) return;
+
+            const pos = getMousePos(e);
+            const handle = getResizeHandle(pos.x, pos.y);
+
+            if (handle) {
+                if (handle.includes('top-left') || handle.includes('bottom-right')) {
+                    wrapper.style.cursor = 'nwse-resize';
+                } else {
+                    wrapper.style.cursor = 'nesw-resize';
+                }
+            } else if (isInsideROI(pos.x, pos.y)) {
+                wrapper.style.cursor = 'move';
+            } else {
+                wrapper.style.cursor = 'default';
+            }
+        });
+
         // Mouse up
         document.addEventListener('mouseup', () => {
+            if (this.state.roi.isDragging || this.state.roi.isResizing) {
+                console.log('✅ Finished interaction');
+            }
             this.state.roi.isDragging = false;
             this.state.roi.isResizing = false;
             this.state.roi.resizeHandle = null;
@@ -503,6 +591,8 @@ const app = {
         if (name === 'roi' && this.state.currentImageData) {
             // Give DOM time to render
             setTimeout(() => {
+                this.resetImageStage(); // Reset zoom/pan
+                this.setupImageStage(); // Setup zoom/pan controls
                 this.updateROIBox();
                 this.setupROIInteraction();
             }, 50);
@@ -510,7 +600,21 @@ const app = {
     },
 
     showError(message) {
-        alert(message);
+        // Create or update error notification
+        let errorEl = document.getElementById('errorNotification');
+        if (!errorEl) {
+            errorEl = document.createElement('div');
+            errorEl.id = 'errorNotification';
+            errorEl.className = 'error-notification';
+            document.body.appendChild(errorEl);
+        }
+
+        errorEl.textContent = message;
+        errorEl.classList.add('show');
+
+        setTimeout(() => {
+            errorEl.classList.remove('show');
+        }, 4000);
     }
 };
 

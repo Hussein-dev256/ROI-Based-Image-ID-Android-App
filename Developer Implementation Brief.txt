@@ -1,0 +1,286 @@
+# ObjectID Web Demo – Developer Implementation Brief
+
+**(Android → Web Feature Parity & UX Expectations)**
+
+## 1. Context & Purpose (Read This First)
+
+I am building **ObjectID**, an AI-powered object recognition system.
+The **Android app is the primary product**, and it uses **Imagga API** to identify objects from **user-selected regions of interest (ROI)** in images.
+
+The purpose of this **web-based demo** is **not** to replace the Android app, but to:
+
+* Reproduce the **exact Android workflow**
+* Allow **recruiters and portfolio visitors** to experience the system
+* Demonstrate **engineering thinking, UX maturity, and AI integration**
+* Work without installing anything
+
+⚠️ This web demo must **feel intentional, polished, and interactive**, not like a basic file uploader.
+
+---
+
+## 2. Core UX Philosophy
+
+This demo should feel like:
+
+* Google Lens (simplified)
+* Apple Vision-style interaction
+* A guided AI experience
+
+It should **not** feel like:
+
+* A raw HTML form
+* A static canvas
+* A minimal prototype
+
+---
+
+## 3. Typography & Visual Direction
+
+* **Primary Font:** `Poppins` (required)
+* Font weights:
+
+  * Headings: 600–700
+  * Body: 400–500
+* Style:
+
+  * Dark UI
+  * Glassmorphism
+  * Soft gradients (blue → purple)
+  * Rounded corners (12–16px)
+  * Smooth transitions (150–250ms)
+
+Typography must help establish **credibility and modernity**.
+
+---
+
+## 4. My Current Pain Points (These MUST be fixed)
+
+### 4.1 UI Quality
+
+* Current UI feels **empty and unfinished**
+* Too minimal → looks like a prototype
+* No clear hierarchy or guidance
+
+👉 The UI must have **visual density**, structure, and flow.
+
+---
+
+### 4.2 Image Handling (Major Issue)
+
+* Uploaded images **expand uncontrollably**
+* Makes annotation extremely difficult
+* No fixed viewing stage
+
+👉 **Fix:**
+Images must live inside a **bounded image stage / viewport**:
+
+* Fixed max width & height
+* Image scales to fit (maintain aspect ratio)
+* Support zoom & pan **inside** the stage
+* Never overflow the container
+
+---
+
+### 4.3 Annotation Canvas (Critical)
+
+The annotation rectangle is currently:
+
+* Not movable freely
+* Not resizable
+* Not interactive
+* Not intuitive
+
+👉 **This is unacceptable for an ROI-based system**
+
+The annotation canvas **must** support:
+
+* Dragging (horizontal, vertical, diagonal)
+* Resizing from all corners and edges
+* Minimum & maximum size constraints
+* Cursor feedback (move / resize)
+* Semi-transparent fill
+* Clear handles
+* Smooth pointer-based interaction (mouse + touch)
+
+This should feel like:
+
+* Figma
+* Photoshop
+* Mobile crop tools
+
+---
+
+## 5. Required Pages / Screens (Web Demo Flow)
+
+### 5.1 Landing / Upload Screen
+
+Purpose:
+
+* Set expectations
+* Invite interaction
+
+Must include:
+
+* Clear CTA: “Select an Image”
+* Secondary CTA: “Try sample image”
+* Short explainer:
+
+  > “Upload an image and highlight the object you want identified.”
+
+---
+
+### 5.2 Image Stage Screen
+
+Purpose:
+
+* Prepare image for annotation
+
+Requirements:
+
+* Fixed image container
+* Dark backdrop
+* Zoom in / out controls
+* Reset view button
+
+No annotation yet — just image preparation.
+
+---
+
+### 5.3 Annotation Mode
+
+Purpose:
+
+* User selects ROI
+
+Must include:
+
+* Interactive annotation rectangle
+* Instructional hint:
+
+  > “Drag to move • Pull corners to resize”
+* Reset annotation option
+* Visual confirmation when ROI is valid
+
+---
+
+### 5.4 Processing Screen
+
+Purpose:
+
+* Reassure user AI is working
+
+Must include:
+
+* Loading indicator
+* Blurred or dimmed background
+* Text:
+
+  > “Identifying selected object…”
+
+---
+
+### 5.5 Results Screen
+
+Purpose:
+
+* Display AI output clearly
+
+Must include:
+
+* Top 3 predictions from Imagga
+* Confidence scores
+* Progress bars or visual indicators
+* Highlight the highest confidence result
+
+Actions:
+
+* Identify another object
+* Go back home
+* Exit demo
+
+---
+
+## 6. Android → Web Feature Parity (Line by Line)
+
+| Android App Feature   | Web Demo Equivalent     | Status Expectation |
+| --------------------- | ----------------------- | ------------------ |
+| Image from gallery    | Upload image            | Required           |
+| Camera capture        | Optional (if supported) | Nice-to-have       |
+| Image size threshold  | Client-side validation  | Required           |
+| ROI annotation        | Interactive canvas      | Required           |
+| Draggable ROI         | Drag in all directions  | Required           |
+| Resizable ROI         | Corners + edges         | Required           |
+| ROI cropping          | Canvas-based crop       | Required           |
+| API request to Imagga | Same request logic      | Required           |
+| Top 3 results         | Display top 3           | Required           |
+| Confidence scores     | Visible percentages     | Required           |
+| Retry / reset         | Reset buttons           | Required           |
+| Exit flow             | Home / close            | Required           |
+
+⚠️ If any Android feature is missing on web, it must be **intentionally justified**, not ignored.
+
+---
+
+## 7. Technical Expectations (High-Level)
+
+* Do **not** reinvent annotation logic
+* Use a proven canvas approach:
+
+  * Konva.js / Fabric.js / similar
+* ROI must be extracted accurately
+* Only ROI is sent to Imagga (not full image)
+* Compress images before upload
+* Clear loading & error states
+
+---
+
+## 8. Responsiveness (Non-Negotiable)
+
+This demo must work on:
+
+* Desktop (primary)
+* Tablets
+* Mobile browsers
+
+Responsive behavior:
+
+* Image stage scales, not breaks
+* Annotation still usable on touch
+* Buttons remain reachable
+* No overflow or clipping
+
+---
+
+## 9. Error States I Don’t Want Forgotten
+
+Handle these explicitly:
+
+* Image too large
+* No annotation selected
+* Annotation too small
+* API failure
+* Network issues
+
+Each must show:
+
+* Clear message
+* Recovery action
+
+---
+
+## 10. Final Expectation
+
+This web demo is **not about features alone**.
+
+It must demonstrate:
+
+* UX thinking
+* Parity with mobile
+* AI workflow clarity
+* Engineering maturity
+
+If a recruiter spends **3 minutes** on this demo, they should immediately understand:
+
+* What ObjectID does
+* Why ROI-based identification matters
+* That this system is thoughtfully built

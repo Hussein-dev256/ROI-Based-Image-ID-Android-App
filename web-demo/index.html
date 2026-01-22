@@ -7,7 +7,8 @@
     <title>ObjectID - AI Object Recognition</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="app-styles.css">
 </head>
 
@@ -67,7 +68,7 @@
                             </svg>
                         </div>
                         <h2>Select an Image</h2>
-                        <p>Choose an image to identify objects with AI</p>
+                        <p>Upload an image and highlight the object you want identified</p>
                         <button class="btn-upload" id="uploadBtn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -87,15 +88,41 @@
                 <div class="roi-card glass-premium">
                     <div class="roi-header">
                         <h2>Select Recognition Area</h2>
-                        <p>Drag and resize to select the region you want to identify</p>
+                        <p>Drag to move • Pull corners to resize</p>
                     </div>
-                    <div class="roi-workspace">
-                        <canvas id="roiCanvas"></canvas>
-                        <div class="roi-selector" id="roiSelector">
-                            <div class="roi-corner top-left"></div>
-                            <div class="roi-corner top-right"></div>
-                            <div class="roi-corner bottom-left"></div>
-                            <div class="roi-corner bottom-right"></div>
+                    <div class="roi-stage-container">
+                        <div class="roi-toolbar">
+                            <button class="tool-btn" id="zoomOutBtn" title="Zoom Out">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                                    <path d="m21 21-4.35-4.35"></path>
+                                </svg>
+                            </button>
+                            <span class="zoom-level" id="zoomLevel">100%</span>
+                            <button class="tool-btn" id="zoomInBtn" title="Zoom In">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                                    <path d="m21 21-4.35-4.35"></path>
+                                </svg>
+                            </button>
+                            <button class="tool-btn" id="resetViewBtn" title="Reset View">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="roi-workspace" id="roiCanvasWrapper">
+                            <canvas id="roiCanvas"></canvas>
+                            <div class="roi-selector" id="roiSelector">
+                                <div class="roi-corner top-left"></div>
+                                <div class="roi-corner top-right"></div>
+                                <div class="roi-corner bottom-left"></div>
+                                <div class="roi-corner bottom-right"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="roi-actions">
@@ -117,8 +144,8 @@
             <div class="view-content">
                 <div class="loading-card glass-premium">
                     <div class="loader-ring"></div>
-                    <h2>Processing Image</h2>
-                    <p>AI is analyzing your selection...</p>
+                    <h2>Analyzing Image</h2>
+                    <p>AI is identifying your selected region...</p>
                 </div>
             </div>
         </div>
@@ -216,6 +243,7 @@
 
     </main>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
     <script src="app.js"></script>
 </body>
 
